@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert Employee management title</title>
+</head>
+
+<body>
+
+
+	<div>
+		<h1>Employee management title</h1>
+		<hr>
+		<h2>save employee</h2>
+
+		<script>     <!-- this validation for user id-->
+			function myFun() {
+				
+				var way = /^[A-Za-z ]+$/;
+				var a = document.getElementById("user_name").value;
+				if (a == "") {
+                    document.getElementById("message").innerHTML = "** required";
+					return false;
+				}
+				if (a.length < 3) {
+					document.getElementById("message").innerHTML = "** need greater  than 3";
+					return false;
+				}
+				if (a.length > 20) {
+					document.getElementById("message").innerHTML = " ** need less  than 20";
+					return false;
+				}
+
+				if (a.match(way))
+					true;
+				else {
+					document.getElementById("message").innerHTML = " ** enter only alphabets  ";
+					return false;
+				}
+				                 <!-- this validation for Email-->
+				                 
+				var e = document.myForm.Email.value;
+				if (e.indexOf('@')<=3) {
+					document.getElementById("emessage").innerHTML = " **invalid @ position";
+					return false;
+				}
+				
+                 if((e.charAt(e.length-4)!='.')&&(e.charAt(e.length-3)!='.')){
+                		document.getElementById("emessage").innerHTML = " **correct the position of   '.'"
+                		return false;
+                 }
+				
+				                <!-- this for user Number-->
+				var m=document.getElementById("Number").value;
+				if(m==""){
+					document.getElementById("Mmessage").innerHTML = " **enter number"
+                		return false;
+				}
+				if(isNaN(m)){
+					document.getElementById("Mmessage").innerHTML = " **only numeric"
+                		return false;
+				}
+				if(m.length<10){
+					document.getElementById("Mmessage").innerHTML = " **write 10 numeric"
+                		return false;
+				}
+				if(m.length>10){
+					document.getElementById("Mmessage").innerHTML = " **write 10 numeric"
+                		return false;
+				}
+				if((m.charAt(0)!=9) && (m.charAt(0)!=7) && (m.charAt(0)!=8)){
+					document.getElementById("Mmessage").innerHTML = " **number should be start with 7,8,9"
+                		return false;		
+				}				               
+				           <!-- validation for user city-->
+
+				var c=document.getElementById("City").value;
+                 var way2 = /^[A-Za-z]+$/;
+				if(c==""){
+					document.getElementById("Cmessage").innerHTML = " **enter city"
+                		return false;
+				}
+				if (c.match(way2))
+					true;
+				else {
+					document.getElementById("Cmessage").innerHTML = " ** enter only alphabets  ";
+					return false;
+				}
+				           <!-- validations for user radio-->	
+				           var rad1=document.getElementById("male").checked;
+				           var rad2=document.getElementById("female").checked;
+                          if((rad1=="") && (rad2=="")){
+                        	  alert("please check");
+                        	  return false;
+                          }return true;
+			}
+	
+		</script>
+
+		<form name="myForm" onsubmit="return myFun()"
+		 action="#" th:action="@{/saveEmployee}" th:object="${employee}"
+			method="post">
+			
+     user Name     <input type="text" id="user_name" value="" th:field="*{name}" placeholder="Employee name"><span id="message"></span><br><br>
+           
+      Email       <input type="text"  id="Email" value="" th:field="*{email}" placeholder="Employee mail"><span id="emessage"></span><br><br>
+    Mobile Number <input type="text" id="Number" value="" th:field="*{mobNo}" placeholder="Employee mobNo"><span id="Mmessage"></span><br><br>
+	City          <input type="text"  id="City" value="" th:field="*{city}" placeholder="Employee city"><span id="Cmessage"></span><br>
+			     
+			     
+			      <td>  <h4>gender</h4></td>
+			     <td>male <input type="radio"name="Gender" th:field="*{gender}" id="male" value="male"/>
+		            female<input type="radio" name="Gender" th:field="*{gender}" id="female" value="female"/><br><br>		      
+	               </td>
+	              <input type="checkbox" name="married"/> is married<br><br>
+		    
+	
+		         <button type="submit">save Employee</button>
+
+		</form>
+		<hr>
+		<a th:href="@{/}"> back to employee list</a>
+	</div>
+</body>
+</html>
